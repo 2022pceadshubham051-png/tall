@@ -82,7 +82,7 @@ logging.basicConfig(
         logging.StreamHandler(sys.stdout),
     ],
 )
-logging.getLogger("pyrogram").setLevel(logging.INFO)
+logging.getLogger("pyrogram").setLevel(logging.WARNING)
 logger = logging.getLogger("tagoverse")
 
 # --------------------------------------------------------------------------- #
@@ -415,6 +415,18 @@ def help_keyboard(page: int) -> InlineKeyboardMarkup:
 # --------------------------------------------------------------------------- #
 # /start & /help
 # --------------------------------------------------------------------------- #
+
+@app.on_message(filters.all, group=-1)
+async def debug_catch_all(client: Client, message: Message) -> None:
+    """TEMPORARY DEBUG HANDLER — logs every incoming update, then lets it continue."""
+    logger.info(
+        "DEBUG_CATCH_ALL: chat_id=%s from=%s text=%r",
+        message.chat.id if message.chat else None,
+        message.from_user.id if message.from_user else None,
+        message.text,
+    )
+    message.continue_propagation()
+
 
 @app.on_message(filters.command("start") & filters.private)
 async def cmd_start_private(client: Client, message: Message) -> None:
