@@ -82,7 +82,7 @@ logging.basicConfig(
         logging.StreamHandler(sys.stdout),
     ],
 )
-logging.getLogger("pyrogram").setLevel(logging.WARNING)
+logging.getLogger("pyrogram").setLevel(logging.INFO)
 logger = logging.getLogger("tagoverse")
 
 # --------------------------------------------------------------------------- #
